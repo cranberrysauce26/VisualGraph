@@ -35,7 +35,7 @@ class Tracer(bdb.Bdb):
 				argval = frame.f_locals[argname]
 				function_args.append(argval)
 
-			if nargs > 0:
+			if nargs >= 0:
 				trace_entry = TraceEntry()
 				trace_entry.function_name = function_name
 				trace_entry.line_number = prev_line
@@ -43,8 +43,6 @@ class Tracer(bdb.Bdb):
 				g = frame.f_locals["self"]
 				trace_entry.graph_id = g.id
 				self.trace.append(trace_entry)
-				# print(g)
-
 			
 
 	def user_line(self, frame):
