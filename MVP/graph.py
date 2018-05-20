@@ -1,8 +1,8 @@
 class Graph:
 	num_graphs=0
 	def __init__(self, n):
-		self.num_graphs = self.num_graphs + 1
-		self.id = self.num_graphs
+		Graph.num_graphs = Graph.num_graphs + 1
+		self.id = Graph.num_graphs
 		self.n = n
 		self.adj = dict()
 		for i in range(1, n+1):
