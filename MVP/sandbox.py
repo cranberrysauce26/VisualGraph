@@ -16,9 +16,13 @@ builtin_blacklist = ['reload', 'open', 'compile',
                    'globals', 'locals', 'vars']
 
 def restricted_import(*args):
+	# print("restricted_import with:", args, "hi")
+	# print("restricted import with args of type", type(args), args[0])
 	module_name = args[0]
+	print("module name is {0}".format(module_name))
 	if module_name in standard_module_import_whitelist + custom_module_import_whitelist:
-		__import__(module_name)
+		imported_module = __import__(*args)
+		return imported_module
 	else:
 		raise Exception("{0} is a banned import".format(module_name))
 
