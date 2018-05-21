@@ -1,22 +1,35 @@
 import resource
 
-ALLOWED_STDLIB_MODULE_IMPORTS = ('math', 'random', 'time', 'datetime',
+standard_module_import_whitelist = ('math', 'random', 'time', 'datetime',
                           'functools', 'itertools', 'operator', 'string',
                           'collections', 're', 'json',
 'heapq', 'bisect', 'copy', 'hashlib')
 
-ALLOWED_CUSTOM_MODULE_IMPORTS = ('graph',)
+custom_module_import_whitelist = ('graph',)
 
-UNSAFE_BUILTINS = ['reload', 'open', 'compile',
+for m in standard_module_import_whitelist+custom_module_import_whitelist:
+	__import__(m)
+
+builtin_blacklist = ['reload', 'open', 'compile',
                    'file', 'eval', 'exec', 'execfile',
                    'exit', 'quit', 'help', 'dir', 
                    'globals', 'locals', 'vars']
 
+def restricted_import(*args):
+	module_name = args[0]
+	if module_name in standard_module_import_whitelist + custom_module_import_whitelist:
+		__import__(module_name)
+	else:
+		raise Exception("{0} is a banned import".format(module_name))
+
+builtin_greylist = {
+	'__import__': restricted_import
+}
+
 MAX_CPU_TIME = 3 # 3 seconds
 MAX_MEMORY = 100000000 # 100 mega bytes
 
-for m in ALLOWED_STDLIB_MODULE_IMPORTS+ALLOWED_CUSTOM_MODULE_IMPORTS:
-	__import__(m)
+
 
 # see https://docs.python.org/3/library/resource.html
 def set_resource_limits():
@@ -37,9 +50,10 @@ def safe_globals(builtin_main):
 
 	for key in dir(builtin_main):
 		val = getattr(builtin_main, key)
-		print(key, ":", val)
-		if key in UNSAFE_BUILTINS:
+		if key in builtin_blacklist:
 			safe_builtins[key] = banned_builtin_wrapper(key)
+		elif key in builtin_greylist:
+			safe_builtins[key] = builtin_greylist[key]
 		else:
 			safe_builtins[key] = val
 

@@ -11,18 +11,14 @@ class Tracer(bdb.Bdb):
 	# main function
 	# it executes the code and returns the trace
 	def execute(self, code_str, builtins=__builtins__):
-		print("in tracer execute with:", code_str)
 		self.trace = []
-		print("about to set sandbox limits")
 		# This causes errors for me!?!
-		# sandbox.set_resource_limits()
+		sandbox.set_resource_limits()
 		safe_globals = sandbox.safe_globals(builtins)
-		print("finished setting sandbox limits")
 		try:
-			print("about to run")
 			self.run(code_str, safe_globals, safe_globals)
 		except Exception as e:
-			pass
+			print(e)
 
 	def user_return(self, frame, return_value):
 		if isinstance(return_value, TraceEntry):
@@ -39,7 +35,6 @@ class Tracer(bdb.Bdb):
 		pass
 
 	def user_exception(self, frame, exc_info):
-		print("caught user exception:", exc_info[1])
 		error_entry = TraceEntry()
 		error_entry.error = exc_info[1]
 		self.trace = [error_entry]
@@ -48,7 +43,7 @@ class Tracer(bdb.Bdb):
 if __name__ == '__main__':
 	tracer = Tracer()
 	code = open("example.py").read()
-	tracer.execute(code)
+	tracer.execute(code, __builtins__)
 	trace = tracer.trace
 	print("\nhere is the trace:")
 	for i, trace_entry in enumerate(trace):
