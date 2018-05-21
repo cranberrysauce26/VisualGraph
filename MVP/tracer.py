@@ -13,7 +13,7 @@ class Tracer(bdb.Bdb):
 	def execute(self, code_str, builtins=__builtins__):
 		self.trace = []
 		# This causes errors for me!?!
-		sandbox.set_resource_limits()
+		# sandbox.set_resource_limits()
 		safe_globals = sandbox.safe_globals(builtins)
 		try:
 			self.run(code_str, safe_globals, safe_globals)
