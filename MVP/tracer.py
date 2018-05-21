@@ -18,7 +18,10 @@ class Tracer(bdb.Bdb):
 		try:
 			self.run(code_str, safe_globals, safe_globals)
 		except Exception as e:
-			print(e)
+			trace_entry = TraceEntry()
+			trace_entry.error = str(e)
+			self.trace = [trace_entry]
+			
 
 	def user_return(self, frame, return_value):
 		if isinstance(return_value, TraceEntry):
