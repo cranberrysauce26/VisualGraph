@@ -7,9 +7,13 @@ ALLOWED_STDLIB_MODULE_IMPORTS = ('math', 'random', 'time', 'datetime',
 
 ALLOWED_CUSTOM_MODULE_IMPORTS = ('graph',)
 
+UNSAFE_BUILTINS = ['reload', 'open', 'compile',
+                   'file', 'eval', 'exec', 'execfile',
+                   'exit', 'quit', 'help', 'dir', 
+                   'globals', 'locals', 'vars']
+
 MAX_CPU_TIME = 3 # 3 seconds
 MAX_MEMORY = 100000000 # 100 mega bytes
-
 
 for m in ALLOWED_STDLIB_MODULE_IMPORTS+ALLOWED_CUSTOM_MODULE_IMPORTS:
 	__import__(m)
@@ -19,15 +23,12 @@ def set_resource_limits():
 	resource.setrlimit(resource.RLIMIT_NOFILE, (0,0))
 	resource.setrlimit(resource.RLIMIT_AS, (MAX_MEMORY, MAX_MEMORY))
 	resource.setrlimit(resource.RLIMIT_CPU, (MAX_CPU_TIME, MAX_CPU_TIME))
+	# pass
 
-unsafe_builtins = ['reload', 'open', 'compile',
-                   'file', 'eval', 'exec', 'execfile',
-                   'exit', 'quit', 'help', 'dir', 
-                   'globals', 'locals', 'vars']
 
 def banned_builtin_wrapper(banned_function_name):
 	def wrapper(*args):
-		raise Exception("YOU ARE VIOLATING MY RULES!!!! "+banned_function_name+ " is a banned builtin function")
+		raise Exception(banned_function_name+ " is a banned builtin function")
 	return wrapper
 
 # see this blog post http://mathamy.com/whats-the-deal-with-builtins-vs-builtin.html
@@ -36,7 +37,8 @@ def safe_globals(builtin_main):
 
 	for key in dir(builtin_main):
 		val = getattr(builtin_main, key)
-		if key in unsafe_builtins:
+		print(key, ":", val)
+		if key in UNSAFE_BUILTINS:
 			safe_builtins[key] = banned_builtin_wrapper(key)
 		else:
 			safe_builtins[key] = val
@@ -47,3 +49,6 @@ def safe_globals(builtin_main):
 	}
 
 	return safe_globals
+
+if __name__== '__main__':
+	safe_globals(__builtins__)

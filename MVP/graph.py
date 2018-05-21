@@ -45,12 +45,6 @@ class Graph:
 		self.adj[u][v]=1
 		self._trace_add_edge(u, v)
 
-
-class tcl:
-	def __init__(self):
-		self.a = 1
-		self.b = 3
-
 if __name__ == '__main__':
 	# print(PYTHONPATH)
 
