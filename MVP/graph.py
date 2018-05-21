@@ -11,12 +11,12 @@ class Graph:
 		tracer_entry.command_name = "construct"
 		return tracer_entry
 
-	def _trace_add_vertice(self):
+	def _trace_add_vertex(self):
 		tracer_entry = TraceEntry()
 		tracer_entry.graph_id = self.id
 		tracer_entry.args = []
 		tracer_entry.return_value = None
-		tracer_entry.command_name = "add_vertice"
+		tracer_entry.command_name = "add_vertex"
 		return tracer_entry
 
 	def _trace_add_edge(self, u, v):
@@ -34,10 +34,10 @@ class Graph:
 		self.adj = {i:{} for i in range(1, n+1)}
 		self._trace___init__(n)
 
-	def add_vertice(self):
+	def add_vertex(self):
 		self.n = self.n + 1
 		self.adj[self.n] = dict()
-		self._trace_add_vertice()
+		self._trace_add_vertex()
 
 	def add_edge(self, u, v):
 		if u < 0 or u > self.n or v < 0 or v > self.n:
