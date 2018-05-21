@@ -41,8 +41,10 @@ class Tracer(bdb.Bdb):
 		raise bdb.BdbQuit
 
 if __name__ == '__main__':
+	print("Running...")
 	tracer = Tracer()
-	code = open("example.py").read()
+#	code = open("example.py").read()
+	code = open("/home/howard/Documents/VisualGraph/MVP/example.py").read()
 	tracer.execute(code, __builtins__)
 	trace = tracer.trace
 	print("\nhere is the trace:")
