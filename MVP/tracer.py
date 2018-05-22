@@ -46,7 +46,7 @@ class Tracer(bdb.Bdb):
 
 def get_trace_as_json(code_str, builtins = __builtins__):
     tracer = Tracer()
-    tracer.execute(code, builtins)
+    tracer.execute(code_str, builtins)
     return json.dumps(tracer.trace, cls=TraceEntryJSONEncoder)
 
 if __name__ == '__main__':
