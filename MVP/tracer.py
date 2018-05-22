@@ -40,7 +40,7 @@ class Tracer(bdb.Bdb):
 
     def user_exception(self, frame, exc_info):
         error_entry = TraceEntry()
-        error_entry.error = exc_info[1]
+        error_entry.error = str(exc_info[1])
         self.trace = [error_entry]
         raise bdb.BdbQuit
 
