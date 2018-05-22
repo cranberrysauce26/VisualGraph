@@ -1,5 +1,6 @@
 import bdb
-from tracer_entry import TraceEntry
+import json
+from tracer_entry import TraceEntry, TraceEntryJSONEncoder
 import sandbox
 
 class Tracer(bdb.Bdb):
@@ -43,6 +44,11 @@ class Tracer(bdb.Bdb):
         self.trace = [error_entry]
         raise bdb.BdbQuit
 
+def get_trace_as_json(code_str, builtins = __builtins__):
+    tracer = Tracer()
+    tracer.execute(code, builtins)
+    return json.dumps(tracer.trace, cls=TraceEntryJSONEncoder)
+
 if __name__ == '__main__':
     tracer = Tracer()
     code = open("example.py").read()
@@ -53,3 +59,5 @@ if __name__ == '__main__':
         print('trace[{0}]: '.format(i), end='')
         trace_entry.display()
         print(' ')
+    print("\nhere is the trace as json:")
+    print(json.dumps(tracer.trace, cls=TraceEntryJSONEncoder))
