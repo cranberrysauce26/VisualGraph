@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from MVP.tracer import Tracer
+from MVP.tracer import get_trace_as_json
 
 app = Flask(__name__)
 
@@ -14,14 +14,7 @@ def trace():
 	code = request.args.get('code')
 	if code == None:
 		return 'Not found'
-	tracer=Tracer()
-	tracer.execute(code, __builtins__)
-	trace = tracer.trace
-	for i, trace_entry in enumerate(trace):
-		print('trace[{0}]: '.format(i), end='')
-		trace_entry.display()
-		print(' ')
-	return code
+	return get_trace_as_json(code, __builtins__)
 
 # https://chrisyeh96.github.io/2017/08/08/definitive-guide-python-imports.html
 if __name__ == '__main__':
