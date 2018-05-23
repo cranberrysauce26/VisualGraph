@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Visual Graph</title>
-  </head>
-  <body>
-    <h1>Insert Code Here</h1>
-    <form>
-   	<textarea name="textarea" style="width:250px;height:150px;"></textarea>
-    <input type="submit" value="Visualize">
-    </form>
+    <head>
+        <meta charset="utf-8">
+        <title>Visual Graph</title>
+    </head>
+    <body>
+        <h1>Insert Code Here</h1>
+        <form onsubmit="Visualize()">
+           	<textarea name="textarea" id="textbox" style="width:600px;height:600px;"></textarea>
+            <input type="submit" id="visualize" value="Visualize">
+        </form>
+        <p id="output">Output goes here</p>
 
-    <script src="main.js"></script>
-  </body>
+        <script>
+            function Visualize(){
+                document.getElementById("output").innerHTML += " Visualize called. Output: ";
+                var text = document.getElementById("textbox").value;
+                document.getElementById("output").innerHTML += text;
+            }
+        </script>
+    </body>
 </html>
