@@ -9,10 +9,8 @@ class Vertex(dict):
         return self.__getitem__(name)
 
     def _trace___setattr__(self, name, value):
-        return self._graph._mark_trace_entry(TraceEntry(
-            command_name="set_vertex_property",
-            args=[name, value]
-        ))
+        self._graph._trace_add_vertex_property(self.id, name, value)
+    
     def __setattr__(self, name, value):
         if name == '_graph':
             object.__setattr__(self, name, value)
@@ -68,6 +66,11 @@ class Graph:
         return self._mark_trace_entry(TraceEntry(
             command_name="add_edge",
             args=[u,v]
+        ))
+    def _trace_add_vertex_property(self, vert_id, prop_name, prop_value):
+        return self._mark_trace_entry(TraceEntry(
+            command_name="add_vertex_property",
+            args=[vert_id, prop_name, prop_value]
         ))
 
 if __name__ == '__main__':
