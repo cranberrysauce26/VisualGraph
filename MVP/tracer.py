@@ -8,6 +8,7 @@ class Tracer(bdb.Bdb):
     def __init__(self):
         bdb.Bdb.__init__(self)
         self.trace = []
+        self.last_line = -1
 
     # main function
     # it executes the code and returns the trace
@@ -25,13 +26,12 @@ class Tracer(bdb.Bdb):
     def user_return(self, frame, return_value):
         if isinstance(return_value, TraceEntry):
             # TODO: Make this less sketchy, maybe by iterating over the linked list
-            prev_frame = frame.f_back.f_back
-            assert(prev_frame)
-            return_value.line_number = prev_frame.f_lineno
+            return_value.line_number = self.last_line
             self.trace.append(return_value)
 
     def user_line(self, frame):
-        pass
+        if frame.f_code.co_filename == '<string>':
+            self.last_line = frame.f_lineno
 
     def user_call(self, frame, argument_list):
         pass
