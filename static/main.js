@@ -1,7 +1,7 @@
 // TODO: Add exception handling for invalid traces
 
 class Graph{
-    constructor(n=0){
+    constructor(n){
         // alert("In graph constructor");
         this.n = n;
         this.adj = {};
@@ -20,7 +20,7 @@ class Graph{
             this.adj[u][v] = 1;
         }
         else {
-            // Error: this should be happenning
+            alert("Error: Attempted to create invalid edge");
             return;
         }
     }
@@ -47,9 +47,7 @@ class GraphManager {
         var retVal = trace["rturn_value"];
         var line = trace["line_number"];
         if (name == "construct"){
-            // alert("Making new graph");
             this.graphs[id] = new Graph(args[0]);
-            // alert("Done");
         }
         else if (name == "add_vertex"){
             this.graphs[id].add_vertex();
@@ -58,7 +56,7 @@ class GraphManager {
             this.graphs[id].add_edge(args[0], args[1]);
         }
         else {
-            // Error: invalid command
+            alert("Error: Invalid command");
             return;
         }
     }
@@ -87,7 +85,7 @@ function Visualize() {
             document.getElementById("output").innerHTML = "Traces:<br>";
             var str = this.responseText;
             var traces = JSON.parse(str);
-            alert(traces.length);
+            // alert(traces.length);
             traces.forEach(function(trace){
                 document.getElementById("output").innerHTML += JSON.stringify(trace) + "<br>";
                 graphManager.CallFunction(trace);
