@@ -34,6 +34,13 @@ class Graphmanager {
             return;
         }
     }
+
+    displayAll(){
+        document.getElementById("Graphs").innerHTML = "";
+        for (var id in graphs){
+            document.getElementById("Graphs").innerHTML += graphs[id].display();
+        }
+    }
 }
 
 class Graph{
@@ -58,5 +65,10 @@ class Graph{
             // Error: this should be happenning
             return;
         }
+    }
+
+    // returns HTML code for the graph display
+    display(){
+        return "HTML for graph";
     }
 }

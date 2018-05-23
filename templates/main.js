@@ -1,6 +1,7 @@
 var graphManager = new GraphManager();
 
 function Visualize() {
+    alert("Visualize Called");
     var text = $("#textbox").val();
     var dat = {code : text}
     if (text.length == 0) {
@@ -10,12 +11,13 @@ function Visualize() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            alert("Outputting");
             document.getElementById("output").innerHTML = "Traces:<br>";
             var str = this.responseText;
             var traces = JSON.parse(str);
             traces.forEach(function(trace){
-                document.getElementById("output").innerHTML += JSON.stringify(trace) + "<br>";
-                graphManager.CallFunction(trace);
+                // document.getElementById("output").innerHTML += "Hi "+JSON.stringify(trace) + "<br>";
+                // graphManager.CallFunction(trace);
             });
         }
     };

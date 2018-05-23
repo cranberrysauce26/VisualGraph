@@ -1,5 +1,51 @@
 from tracer_entry import TraceEntry
 
+class Graph:
+    num_graphs=0
+
+    def _trace___init__(self, n):
+        tracer_entry = TraceEntry()
+        tracer_entry.graph_id = self.id
+        tracer_entry.args = [n]
+        tracer_entry.return_value = None
+        tracer_entry.command_name = "construct"
+        return tracer_entry
+
+    def _trace_add_vertex(self):
+        tracer_entry = TraceEntry()
+        tracer_entry.graph_id = self.id
+        tracer_entry.args = []
+        tracer_entry.return_value = None
+        tracer_entry.command_name = "add_vertex"
+        return tracer_entry
+
+    def _trace_add_edge(self, u, v):
+        tracer_entry = TraceEntry()
+        tracer_entry.graph_id = self.id
+        tracer_entry.args = [u, v]
+        tracer_entry.return_value = None
+        tracer_entry.command_name = "add_edge"
+        return tracer_entry
+
+    def __init__(self, n=0):
+        Graph.num_graphs = Graph.num_graphs + 1
+        self.id = Graph.num_graphs
+        self.n = n
+        self.adj = {i:{} for i in range(1, n+1)}
+        self._trace___init__(n)
+
+    def add_vertex(self):
+        self.n = self.n + 1
+        self.adj[self.n] = dict()
+        self._trace_add_vertex()
+
+    def add_edge(self, u, v):
+        if u < 0 or u > self.n or v < 0 or v > self.n:
+            raise Exception("invalid inputracer_entryt to add_edge")
+        self.adj[u][v]=1
+        self._trace_add_edge(u, v)
+
+'''
 class Vertex(dict):
     def __init__(self, id, graph):
         self._graph = graph
@@ -9,8 +55,10 @@ class Vertex(dict):
         return self.__getitem__(name)
 
     def _trace___setattr__(self, name, value):
-        self._graph._trace_add_vertex_property(self.id, name, value)
-    
+        return self._graph._mark_trace_entry(TraceEntry(
+            command_name="set_vertex_property",
+            args=[name, value]
+        ))
     def __setattr__(self, name, value):
         if name == '_graph':
             object.__setattr__(self, name, value)
@@ -67,11 +115,6 @@ class Graph:
             command_name="add_edge",
             args=[u,v]
         ))
-    def _trace_add_vertex_property(self, vert_id, prop_name, prop_value):
-        return self._mark_trace_entry(TraceEntry(
-            command_name="add_vertex_property",
-            args=[vert_id, prop_name, prop_value]
-        ))
 
 if __name__ == '__main__':
     # do a dfs!
@@ -97,3 +140,4 @@ if __name__ == '__main__':
     for u in g.vertices:
         if not g[u].visit:
             dfs(u, g)
+'''

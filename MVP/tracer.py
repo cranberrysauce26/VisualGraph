@@ -45,25 +45,24 @@ class Tracer(bdb.Bdb):
         raise bdb.BdbQuit
 
 def get_trace_as_json(code_str, builtins = __builtins__):
-    print("Tracer called")
     tracer = Tracer()
     tracer.execute(code_str, builtins)
     print(tracer.trace)
     return json.dumps(tracer.trace, cls=TraceEntryJSONEncoder)
 
-if __name__ == '__main__':
-    print("Running...")
-    tracer = Tracer()
-    import sys
-    code = open("example.py").read()
-	# code = open("/home/howard/Documents/VisualGraph/MVP/example.py").read() # for Howard
-    tracer.execute(code, __builtins__)
-    trace = tracer.trace
-    print("\nhere is the trace:")
-    for i, trace_entry in enumerate(trace):
-        print('trace[{0}]: '.format(i), end='')
-        trace_entry.display()
-        print(' ')
+# if __name__ == '__main__':
+#     print("Running...")
+#     tracer = Tracer()
+#     import sys
+#     code = open("example.py").read()
+# 	# code = open("/home/howard/Documents/VisualGraph/MVP/example.py").read() # for Howard
+#     tracer.execute(code, __builtins__)
+#     trace = tracer.trace
+#     print("\nhere is the trace:")
+#     for i, trace_entry in enumerate(trace):
+#         print('trace[{0}]: '.format(i), end='')
+#         trace_entry.display()
+#         print(' ')
 
 # tracer = Tracer()
 # code = request.data["code"]
