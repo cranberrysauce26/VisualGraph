@@ -9,6 +9,10 @@ app.debug = True
 def index():
 	return render_template('index.html')
 
+@app.route('/test')
+def test():
+	return render_template('test.html')
+
 @app.route('/trace', methods=['POST'])
 def trace():
 	data = request.get_json()
