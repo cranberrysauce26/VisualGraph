@@ -14,14 +14,13 @@
         <p id="output">Output goes here</p>
 
         <script>
+        $(function(){
             function Visualize() {
                 var text = $("#textbox").val();
                 $("#output").html(text);
                 alert("Look at the output");
             }
-            // $("#visualize").on("click", function(){
-            //     alert("Submitted");
-            // });
+        });
         </script>
     </body>
 </html>
