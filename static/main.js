@@ -91,6 +91,7 @@ function Visualize() {
                 graphManager.CallFunction(trace);
             });
             document.getElementById("output").innerHTML += "Finished printing traces";
+            graphManager.displayAll();
         }
     };
     xhttp.open("POST", "/trace", true);
