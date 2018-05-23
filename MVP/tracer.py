@@ -50,7 +50,8 @@ if __name__ == '__main__':
     print("Running...")
     tracer = Tracer()
     import os
-    code = open(os.path.join(os.path.dirname(__file__), "example.py")).read() # for everyone
+    code = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "example.py")).read() # for everyone
+    print("filename is", os.path.join(os.path.dirname(os.path.abspath(__file__)), "example.py"))
 	# code = open("/home/howard/Documents/VisualGraph/MVP/example.py").read() # for Howard
     tracer.execute(code, __builtins__)
     trace = tracer.trace
