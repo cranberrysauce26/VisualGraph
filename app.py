@@ -9,12 +9,10 @@ app.debug = True
 def index():
 	return render_template('index.html')
 
-@app.route('/trace')
+@app.route('/trace', methods=['POST'])
 def trace():
-	code = request.args.get('code')
-	if code == None:
-		return 'Not found'
-	return get_trace_as_json(code, __builtins__)
+	data = request.get_json()
+	return get_trace_as_json(data['code'], __builtins__)
 
 # https://chrisyeh96.github.io/2017/08/08/definitive-guide-python-imports.html
 if __name__ == '__main__':
