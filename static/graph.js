@@ -1,7 +1,7 @@
 // TODO: Add exception handling for invalid traces
 
 class Graph{
-    static graphs = {}; // a dictionary mapping ids to graphs
+    static var graphs = {}; // a dictionary mapping ids to graphs
 
     static CallFunction(trace){
         if (trace["error"]){
