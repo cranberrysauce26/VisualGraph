@@ -1,3 +1,5 @@
+var graphManager = new GraphManager();
+
 function Visualize() {
     var text = $("#textbox").val();
     var dat = {code : text}
@@ -13,7 +15,7 @@ function Visualize() {
             var traces = JSON.parse(str);
             traces.forEach(function(trace){
                 document.getElementById("output").innerHTML += JSON.stringify(trace) + "<br>";
-                Graph.CallFunction(trace);
+                graphManager.CallFunction(trace);
             });
         }
     };

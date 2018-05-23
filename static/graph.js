@@ -5,7 +5,7 @@ class Graphmanager {
         this.graphs = {};
     }
 
-    static CallFunction(trace){
+    CallFunction(trace){
         if (trace["error"]){
             return;
         }

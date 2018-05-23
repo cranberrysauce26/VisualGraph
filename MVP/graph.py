@@ -7,7 +7,7 @@ class Vertex(dict):
 
     def __getattr__(self, name):
         return self.__getitem__(name)
-    
+
     def _trace___setattr__(self, name, value):
         return self._graph._mark_trace_entry(TraceEntry(
             command_name="set_vertex_property",
@@ -26,7 +26,7 @@ class Graph:
 
     num_graphs = 0
 
-    def __init__(self, n=0):d
+    def __init__(self, n=0):
         Graph.num_graphs = Graph.num_graphs + 1
         self.id = Graph.num_graphs
         self.num_vertices = n
@@ -44,10 +44,10 @@ class Graph:
 
     def add_edge(self, u, v):
         self.adj[u].append(v)
-    
+
     def vertex(self, id):
         return self.vertices[id]
-    
+
     # provides access to vertex using subscript notation
     # e.g., u = g[5] is equivalent to u = g.vertex(5)
     def __getitem__(self, id):
@@ -63,7 +63,7 @@ class Graph:
             command_name="add_vertex",
             args = [id]
         ))
-    
+
     def _trace_add_edge(self, u, v):
         return self._mark_trace_entry(TraceEntry(
             command_name="add_edge",
