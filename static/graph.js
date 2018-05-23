@@ -1,7 +1,9 @@
 // TODO: Add exception handling for invalid traces
 
-class Graph{
-    static var graphs = {}; // a dictionary mapping ids to graphs
+class Graphmanager {
+    constructor() {
+        this.graphs = {};
+    }
 
     static CallFunction(trace){
         if (trace["error"]){
@@ -32,7 +34,9 @@ class Graph{
             return;
         }
     }
+}
 
+class Graph{
     constructor(n=0){
         this.n = n;
         this.adj = {};
