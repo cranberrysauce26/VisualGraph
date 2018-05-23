@@ -1,11 +1,13 @@
 // TODO: Add exception handling for invalid traces
 
-class Graphmanager {
+class GraphManager {
     constructor() {
+        alert("In GraphManager constructor");
         this.graphs = {};
     }
 
     CallFunction(trace){
+        alert("In CallFunction");
         if (trace["error"]){
             return;
         }
@@ -20,6 +22,18 @@ class Graphmanager {
                 graphs[id] = new Graph();
             }
             else {
+        else if (name == "add_vertex"){
+            graphs[id].add_vertex();
+        }
+        else if (name == "add_edge") {
+            graphs[id].add_edge(args[0], args[1]);
+        }
+        else {
+            // Error: invalid command
+            return;
+        }
+    }
+
                 graphs[id] = new Graph(args[0]);
             }
         }
