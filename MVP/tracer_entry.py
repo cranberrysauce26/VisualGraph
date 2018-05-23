@@ -1,13 +1,14 @@
 import json
 
 class TraceEntry:
-    def __init__(self):
-        self.error = None
-        self.command_name = None
-        self.args = []
-        self.graph_id = None
-        self.return_value = None
-        self.line_number = None
+    def __init__(self, error=None, command_name=None, args=[], graph_id=None, return_value=None, line_number=None, graph_type=None):
+        self.error = error
+        self.command_name = command_name
+        self.args = args
+        self.graph_id = graph_id
+        self.return_value = return_value
+        self.line_number = line_number
+        self.graph_type = graph_type
 
     # for convenience
     def display(self):
@@ -26,7 +27,8 @@ class TraceEntryJSONEncoder(json.JSONEncoder):
                 "args": obj.args,
                 "graph_id": obj.graph_id,
                 "return_value": obj.return_value,
-                "line_number": obj.line_number
+                "line_number": obj.line_number,
+                "graph_type": obj.graph_type
             }
         return json.JSONEncoder.default(self, obj)
 
