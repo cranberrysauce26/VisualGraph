@@ -7,6 +7,9 @@
     </head>
     <body>
         <h1>Insert Code Here</h1>
+        <!-- <form action="">
+        Code: <input type="text" id="txt1" onkeyup="Visualize(this.value)">
+        </form> -->
         <form onsubmit="Visualize()">
            	<textarea id="textbox" style="width:600px;height:600px;"></textarea>
             <input type="submit" id="visualize" value="Visualize">
@@ -14,14 +17,13 @@
         <p id="output">Output goes here</p>
 
         <script>
-        $(function(){
-            alert("Hello");
             function Visualize() {
                 alert("alert 1");
-                var text = $("#textbox").val();
+                var text = "HI";
+                // var text = $("#textbox").val();
                 alert("alert 2");
                 var xhttp;
-                if (str.length == 0) {
+                if (text.length == 0) {
                     document.getElementById("output").innerHTML = "You didn't enter anything!";
                     return;
                 }
@@ -33,14 +35,13 @@
                 };
 
                 alert("alert 3");
-                xhttp.open("GET", "tracer.py?code="+str, true);
+                xhttp.open("GET", "/trace?code="+text, true);
                 xhttp.send();
 
                 alert("alert 4");
                 // $("#output").html(text);
                 // alert("Look at the output");
             }
-        });
         </script>
     </body>
 </html>
