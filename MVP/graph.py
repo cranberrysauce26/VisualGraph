@@ -1,5 +1,5 @@
 from tracer_entry import TraceEntry
-
+'''
 class Graph:
     num_graphs=0
 
@@ -44,18 +44,21 @@ class Graph:
             raise Exception("invalid inputracer_entryt to add_edge")
         self.adj[u][v]=1
         self._trace_add_edge(u, v)
-
 '''
+
 class Vertex(dict):
-    def __init__(self, id, graph):
+    def __init__(self, id, graph, silent=False):
         self._graph = graph
-        self.id = id
+        if silent:
+            self.__setitem__('id', id)
+        else:
+            self.id = id
 
     def __getattr__(self, name):
         return self.__getitem__(name)
 
     def _trace___setattr__(self, name, value):
-        return self._graph._mark_trace_entry(TraceEntry(
+        self._graph._mark_trace_entry(TraceEntry(
             command_name="set_vertex_property",
             args=[name, value]
         ))
@@ -79,9 +82,10 @@ class Graph:
         self.graph_type = "graph"
         # by default, index by 1, 2, ..., n
         # however, it is flexible. So you can index by strings, etc.
-        self.vertices = {id:Vertex(id, self) for id in range(1, self.num_vertices+1)} # vertex list
+        self.vertices = {id:Vertex(id, self, True) for id in range(1, self.num_vertices+1)} # vertex list
         self.adj = {id:list() for id in range(1, self.num_vertices+1)} # adjancency list
         self.edges = () # edge list
+        self._trace___init__(self.num_vertices)
 
     def add_vertex(self, id):
         self.vertices[id] = Vertex(id, self)
@@ -103,15 +107,21 @@ class Graph:
         trace_entry.graph_id = self.id
         trace_entry.graph_type = self.graph_type
         return trace_entry
+    
+    def _trace___init__(self, n):
+        self._mark_trace_entry(TraceEntry(
+            command_name="construct",
+            args = [n]
+        ))
 
     def _trace_add_vertex(self, id):
-        return self._mark_trace_entry(TraceEntry(
+        self._mark_trace_entry(TraceEntry(
             command_name="add_vertex",
             args = [id]
         ))
 
     def _trace_add_edge(self, u, v):
-        return self._mark_trace_entry(TraceEntry(
+        self._mark_trace_entry(TraceEntry(
             command_name="add_edge",
             args=[u,v]
         ))
@@ -140,4 +150,3 @@ if __name__ == '__main__':
     for u in g.vertices:
         if not g[u].visit:
             dfs(u, g)
-'''
