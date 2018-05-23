@@ -62,9 +62,9 @@ def get_trace_as_json(code_str, builtins = __builtins__):
 # 		trace_entry.display()
 # 		print(' ')
 
-tracer = Tracer()
-code = request.data["code"]
-tracer.execute(code, __builtins__)
-trace = tracer.trace
-str "Traces Done"
-return Response(str)
+# tracer = Tracer()
+# code = request.data["code"]
+# tracer.execute(code, __builtins__)
+# trace = tracer.trace
+# str "Traces Done"
+# return Response(str)
