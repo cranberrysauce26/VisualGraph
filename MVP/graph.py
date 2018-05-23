@@ -47,12 +47,9 @@ class Graph:
 '''
 
 class Vertex(dict):
-    def __init__(self, id, graph, silent=False):
-        self._graph = graph
-        if silent:
-            self.__setitem__('id', id)
-        else:
-            self.id = id
+    def __init__(self, id, graph):
+        object.__setattr__(self, '_graph', graph)
+        self.__setitem__('id', id)
 
     def __getattr__(self, name):
         return self.__getitem__(name)
@@ -63,9 +60,7 @@ class Vertex(dict):
             args=[name, value]
         ))
     def __setattr__(self, name, value):
-        if name == '_graph':
-            object.__setattr__(self, name, value)
-        elif name not in dir(self):
+        if name not in dir(self):
            self.__setitem__(name, value)
            self._trace___setattr__(name, value)
         else:
@@ -82,7 +77,7 @@ class Graph:
         self.graph_type = "graph"
         # by default, index by 1, 2, ..., n
         # however, it is flexible. So you can index by strings, etc.
-        self.vertices = {id:Vertex(id, self, True) for id in range(1, self.num_vertices+1)} # vertex list
+        self.vertices = {id:Vertex(id, self) for id in range(1, self.num_vertices+1)} # vertex list
         self.adj = {id:list() for id in range(1, self.num_vertices+1)} # adjancency list
         self.edges = () # edge list
         self._trace___init__(self.num_vertices)
@@ -94,6 +89,7 @@ class Graph:
 
     def add_edge(self, u, v):
         self.adj[u].append(v)
+        self._trace_add_edge(u, v)
 
     def vertex(self, id):
         return self.vertices[id]
