@@ -19,9 +19,7 @@ class Tracer(bdb.Bdb):
         try:
             self.run(code_str, safe_globals, safe_globals)
         except Exception as e:
-            trace_entry = TraceEntry()
-            trace_entry.error = str(e)
-            self.trace = [trace_entry]
+            self.trace.append(TraceEntry(error=str(e)))
 
 
     def user_return(self, frame, return_value):
@@ -39,9 +37,7 @@ class Tracer(bdb.Bdb):
         pass
 
     def user_exception(self, frame, exc_info):
-        error_entry = TraceEntry()
-        error_entry.error = str(exc_info[1])
-        self.trace = [error_entry]
+        self.trace.append(TraceEntry(error=str(exc_info[1])))
         raise bdb.BdbQuit
 
 def get_trace_as_json(code_str, builtins = __builtins__):
