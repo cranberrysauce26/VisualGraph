@@ -27,7 +27,7 @@ class Graph:
         tracer_entry.command_name = "add_edge"
         return tracer_entry
 
-    def __init__(self, n=0):
+    def __init__(self, n=0):d
         Graph.num_graphs = Graph.num_graphs + 1
         self.id = Graph.num_graphs
         self.n = n

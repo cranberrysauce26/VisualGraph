@@ -13,7 +13,9 @@ function Visualize() {
             var traces = JSON.parse(str);
             traces.forEach(function(trace){
                 document.getElementById("output").innerHTML += JSON.stringify(trace) + "<br>";
+                Graph.CallFunction(trace);
             });
+
         }
     };
     xhttp.open("POST", "/trace", true);
