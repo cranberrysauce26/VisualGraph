@@ -3,11 +3,12 @@
     <head>
         <meta charset="utf-8">
         <title>Visual Graph</title>
+        <script src="jquery-3.3.1.min.js"></script>
     </head>
     <body>
         <h1>Insert Code Here</h1>
         <form onsubmit="Visualize()">
-           	<textarea name="textarea" id="textbox" style="width:600px;height:600px;"></textarea>
+           	<textarea id="textbox" style="width:600px;height:600px;"></textarea>
             <input type="submit" id="visualize" value="Visualize">
         </form>
         <p id="output">Output goes here</p>
@@ -15,7 +16,7 @@
         <script>
             function Visualize(){
                 document.getElementById("output").innerHTML += " Visualize called. Output: ";
-                var text = document.getElementById("textbox").value;
+                var text = $("textbox").val();
                 document.getElementById("output").innerHTML += text;
             }
         </script>
