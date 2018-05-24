@@ -27,10 +27,13 @@ class Graph{
 
     // returns HTML code for the graph display
     display(){
-        var radius = 50;
+        var bigR = 100;
+        var smallR = 40;
+        var center = new paper.Point(200, 200);
         for (var i = 0; i < this.n; i++){
             var angle = 2*i*Math.PI/this.n;
-            var vertex = new paper.Path.Circle(100+radius*Math.cos(angle), 100+radius*Math.sin(angle), 20);
+            var shift = new paper.Point(bigR*Math.cos(angle), bigR*Math.sin(angle));
+            var vertex = new paper.Path.Circle(center.add(shift), smallR);
             vertex.fillColor = 'blue';
         }
     }
