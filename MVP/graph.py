@@ -70,26 +70,30 @@ class Graph:
 
     num_graphs = 0
 
-    def __init__(self, n=0):
+    def __init__(self, n=0, directed=False, weighted=False):
         Graph.num_graphs = Graph.num_graphs + 1
         self.id = Graph.num_graphs
         self.num_vertices = n
+        self.directed = directed
+        self.weighted = weighted
         self.graph_type = "graph"
         # by default, index by 1, 2, ..., n
         # however, it is flexible. So you can index by strings, etc.
         self.vertices = {id:Vertex(id, self) for id in range(1, self.num_vertices+1)} # vertex list
         self.adj = {id:list() for id in range(1, self.num_vertices+1)} # adjancency list
         self.edges = () # edge list
-        self._trace___init__(self.num_vertices)
+        self._trace___init__(self.num_vertices, self.directed, self.weighted)
 
     def add_vertex(self, id):
         self.vertices[id] = Vertex(id, self)
         self.adj[id] = list()
         self._trace_add_vertex(id)
 
-    def add_edge(self, u, v):
-        self.adj[u].append(v)
-        self._trace_add_edge(u, v)
+    def add_edge(self, u, v, w=1):
+        self.adj[u].append((v, w))
+        if not self.directed:
+            self.adj[v].append((u, w))
+        self._trace_add_edge(u, v, w)
 
     def vertex(self, id):
         return self.vertices[id]
@@ -103,11 +107,11 @@ class Graph:
         trace_entry.graph_id = self.id
         trace_entry.graph_type = self.graph_type
         return trace_entry
-    
-    def _trace___init__(self, n):
+
+    def _trace___init__(self, n, directed, weighted):
         self._mark_trace_entry(TraceEntry(
             command_name="construct",
-            args = [n]
+            args = [n, directed, weighted]
         ))
 
     def _trace_add_vertex(self, id):
@@ -116,10 +120,10 @@ class Graph:
             args = [id]
         ))
 
-    def _trace_add_edge(self, u, v):
+    def _trace_add_edge(self, u, v, w):
         self._mark_trace_entry(TraceEntry(
-            command_name="add_edge",
-            args=[u,v]
+            command_name = "add_edge",
+            args = [u, v, w]
         ))
 
 if __name__ == '__main__':

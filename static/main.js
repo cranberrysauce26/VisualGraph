@@ -1,9 +1,10 @@
 // TODO: Add exception handling for invalid traces
 
 class Graph{
-    constructor(n){
-        // alert("In graph constructor");
+    constructor(n, directed, weighted){
         this.n = n;
+        this.directed = directed;
+        this.weighted = weighted;
         this.adj = {};
         for (var i = 1; i <= this.n; i++){
             this.adj[i] = {};
@@ -15,9 +16,12 @@ class Graph{
         this.adj[this.n] = {};
     }
 
-    add_edge(u, v) {
+    add_edge(u, v, w) {
         if (u > 0 && u <= this.n && v > 0 && v <= this.n){
-            this.adj[u][v] = 1;
+            this.adj[u][v] = w;
+            if (!this.directed){
+                this.adj[v][u] = w;
+            }
         }
         else {
             alert("Error: Attempted to create invalid edge");
@@ -25,7 +29,6 @@ class Graph{
         }
     }
 
-    // returns HTML code for the graph display
     display(){
         var pos = {}; // positions of the vertices
         var bigR = 150;
@@ -71,13 +74,21 @@ class GraphManager {
         var retVal = trace["rturn_value"];
         var line = trace["line_number"];
         if (name == "construct"){
-            this.graphs[id] = new Graph(args[0]);
+            if (args.length != 3){
+                alert("Error: Wrong number of arguments for graph constructor");
+                return;
+            }
+            this.graphs[id] = new Graph(args[0], args[1], args[2]);
         }
         else if (name == "add_vertex"){
             this.graphs[id].add_vertex();
         }
         else if (name == "add_edge") {
-            this.graphs[id].add_edge(args[0], args[1]);
+            if (args.length != 3){
+                alert("Error: Wrong number of arguments for add_edge");
+                return;
+            }
+            this.graphs[id].add_edge(args[0], args[1], args[2]);
         }
         else {
             alert("Error: Invalid command");
