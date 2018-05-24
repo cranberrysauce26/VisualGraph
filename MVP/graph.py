@@ -57,7 +57,7 @@ class Vertex(dict):
     def _trace___setattr__(self, name, value):
         self._graph._mark_trace_entry(TraceEntry(
             command_name="set_vertex_property",
-            args=[name, value]
+            args=[self.id, name, value]
         ))
     def __setattr__(self, name, value):
         if name not in dir(self):

@@ -5,6 +5,7 @@ g.add_edge(2, 4)
 g.add_vertex(5)
 g.add_edge(5, 2)
 g.add_edge(3, 5)
+g[1].visited = True;
 # g.add_vertex(5)
 # g.add_edge(1, 2)
 # g.add_edge(2, 1)

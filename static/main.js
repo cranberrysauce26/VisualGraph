@@ -1,16 +1,29 @@
-// TODO: Add exception handling for invalid traces
+class Vertex {
+    constructor(id, graph) {
+        this.id = id;
+        this.graph = graph;
+        this.properties = {};
+    }
+
+    set_property(name, value){
+        this.properties[name] = value;
+    }
+}
 
 class Graph{
     constructor(n, directed, weighted){
         this.n = n;
         this.directed = directed;
         this.weighted = weighted;
+        this.vertices = {};
         this.adj = {};
         for (var i = 1; i <= this.n; i++){
+            this.vertices[i] = new Vertex(i, this);
             this.adj[i] = {};
         }
     }
 
+    // TODO: add_vertex with id
     add_vertex(){
         this.n++;
         this.adj[this.n] = {};
@@ -90,8 +103,15 @@ class GraphManager {
             }
             this.graphs[id].add_edge(args[0], args[1], args[2]);
         }
+        else if (name == "set_vertex_property") {
+            if (args.length != 3){
+                alert("Error: Wrong number of arguments for setting vertex prooperty");
+                return;
+            }
+            this.graphs[id].vertices[args[0]].set_property(args[1], args[2]);
+        }
         else {
-            alert("Error: Invalid command");
+            alert("Error: Invalid command name: "+command_name);
             return;
         }
     }
