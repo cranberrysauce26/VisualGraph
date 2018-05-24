@@ -5,12 +5,20 @@ class Vertex {
         this.properties = {};
     }
 
-    set_property(name, value){
+    setProperty(name, value){
         this.properties[name] = value;
+    }
+
+    printProperties(position) {
+        var text = new paper.PointText(position);
+        text.justification = "center";
+        text.fillColor = 'black';
+        text.fontSize = '20px';
+        text.content = JSON.stringify(this.properties);
     }
 }
 
-class Graph{
+class Graph {
     constructor(n, directed, weighted){
         this.n = n;
         this.directed = directed;
@@ -27,6 +35,7 @@ class Graph{
     add_vertex(){
         this.n++;
         this.adj[this.n] = {};
+        this.vertices[this.n] = new Vertex(this.n, this);
     }
 
     add_edge(u, v, w) {
@@ -47,7 +56,7 @@ class Graph{
         var bigR = 150;
         var smallR = 40;
         var center = new paper.Point(300, 300);
-        for (var i = 1; i <= this.n; i++){
+        for (var i = 1; i <= this.n; i++){ // Assumes vertices are labelled with numbers
             var angle = 2*i*Math.PI/this.n;
             var shift = new paper.Point(bigR*Math.cos(angle), bigR*Math.sin(angle));
             pos[i] = center.add(shift);
@@ -59,6 +68,7 @@ class Graph{
             text.fillColor = 'white';
             text.fontSize = '30px';
             text.content = i;
+            this.vertices[i].printProperties(pos[i].add(new paper.Point(bigR*Math.cos(angle)/2, bigR*Math.sin(angle)/2)));
         }
         for (var i = 1; i <= this.n; i++){
             for (var j in this.adj[i]){
@@ -108,7 +118,7 @@ class GraphManager {
                 alert("Error: Wrong number of arguments for setting vertex prooperty");
                 return;
             }
-            this.graphs[id].vertices[args[0]].set_property(args[1], args[2]);
+            this.graphs[id].vertices[args[0]].setProperty(args[1], args[2]);
         }
         else {
             alert("Error: Invalid command name: "+command_name);
