@@ -12,7 +12,7 @@ class Graph{
 
     add_vertex(){
         this.n++;
-        this.adj[n] = {};
+        this.adj[this.n] = {};
     }
 
     add_edge(u, v) {
@@ -27,7 +27,11 @@ class Graph{
 
     // returns HTML code for the graph display
     display(){
-        return "HTML for graph";
+        console.log(this.n);
+        var center = new paper.Point(100,100);
+        var radius = 50;
+        var vertices = new paper.Path.RegularPolygon(center, this.n, radius);
+        vertices.strokeColor = 'black';
     }
 }
 
@@ -62,10 +66,14 @@ class GraphManager {
     }
 
     displayAll(){
-        document.getElementById("Graphs").innerHTML = "";
+        var canvas = document.getElementById("Display");
+        paper.setup(canvas);
         for (var id in this.graphs){
-            document.getElementById("Graphs").innerHTML += this.graphs[id].display();
+            this.graphs[id].display();
         }
+        paper.view.draw();
+        // document.getElementById("Graphs").innerHTML = "";
+
     }
 }
 
