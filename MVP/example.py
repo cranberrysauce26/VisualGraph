@@ -1,9 +1,10 @@
 from graph import Graph
 g = Graph(4)
 g.add_edge(1, 2)
-g.add_edge(2, 1)
-g.add_vertex();
-g.add_edge(5, 1)
+g.add_edge(2, 4)
+g.add_vertex(5)
+g.add_edge(5, 2)
+g.add_edge(3, 5)
 # g.add_vertex(5)
 # g.add_edge(1, 2)
 # g.add_edge(2, 1)
