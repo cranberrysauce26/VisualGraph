@@ -27,11 +27,12 @@ class Graph{
 
     // returns HTML code for the graph display
     display(){
-        console.log(this.n);
-        var center = new paper.Point(100,100);
         var radius = 50;
-        var vertices = new paper.Path.RegularPolygon(center, this.n, radius);
-        vertices.strokeColor = 'black';
+        for (var i = 0; i < this.n; i++){
+            var angle = 2*i*Math.PI/this.n;
+            var vertex = new paper.Path.Circle(100+radius*Math.cos(angle), 100+radius*Math.sin(angle), 20);
+            vertex.fillColor = 'blue';
+        }
     }
 }
 
