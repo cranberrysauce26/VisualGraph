@@ -35,6 +35,11 @@ class Graph{
             var shift = new paper.Point(bigR*Math.cos(angle), bigR*Math.sin(angle));
             var vertex = new paper.Path.Circle(center.add(shift), smallR);
             vertex.fillColor = 'blue';
+            var text = new paper.PointText(center.add(shift).add(new paper.Point(0,10)));
+            text.justification = 'center';
+            text.fillColor = 'white';
+            text.fontSize = '30px';
+            text.content = i;
         }
     }
 }
