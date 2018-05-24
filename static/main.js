@@ -27,19 +27,30 @@ class Graph{
 
     // returns HTML code for the graph display
     display(){
+        var pos = {}; // positions of the vertices
         var bigR = 150;
         var smallR = 40;
         var center = new paper.Point(300, 300);
-        for (var i = 0; i < this.n; i++){
+        for (var i = 1; i <= this.n; i++){
             var angle = 2*i*Math.PI/this.n;
             var shift = new paper.Point(bigR*Math.cos(angle), bigR*Math.sin(angle));
-            var vertex = new paper.Path.Circle(center.add(shift), smallR);
+            pos[i] = center.add(shift);
+            var vertex = new paper.Path.Circle(pos[i], smallR);
             vertex.fillColor = 'blue';
-            var text = new paper.PointText(center.add(shift).add(new paper.Point(0,10)));
+            // vertex label
+            var text = new paper.PointText(pos[i].add(new paper.Point(0,10)));
             text.justification = 'center';
             text.fillColor = 'white';
             text.fontSize = '30px';
             text.content = i;
+        }
+        for (var i = 1; i <= this.n; i++){
+            for (var j in this.adj[i]){
+                var edge = new paper.Path.Line(pos[i], pos[j]);
+                edge.strokeColor = 'black';
+                edge.strokeWidth = 10;
+                edge.sendToBack();
+            }
         }
     }
 }
@@ -82,8 +93,6 @@ class GraphManager {
             this.graphs[id].display();
         }
         paper.view.draw();
-        // document.getElementById("Graphs").innerHTML = "";
-
     }
 }
 
