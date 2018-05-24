@@ -27,9 +27,9 @@ class Graph{
 
     // returns HTML code for the graph display
     display(){
-        var bigR = 100;
+        var bigR = 150;
         var smallR = 40;
-        var center = new paper.Point(200, 200);
+        var center = new paper.Point(300, 300);
         for (var i = 0; i < this.n; i++){
             var angle = 2*i*Math.PI/this.n;
             var shift = new paper.Point(bigR*Math.cos(angle), bigR*Math.sin(angle));
@@ -77,6 +77,7 @@ class GraphManager {
     displayAll(){
         var canvas = document.getElementById("Display");
         paper.setup(canvas);
+        paper.project.activeLayer.removeChildren();
         for (var id in this.graphs){
             this.graphs[id].display();
         }
