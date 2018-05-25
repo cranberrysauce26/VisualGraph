@@ -52,8 +52,9 @@ class Tracer(bdb.Bdb):
             raise bdb.BdbQuit
 
     def user_exception(self, frame, exc_info):
-        print("caught user exception", str(exc_info[0]))
-        self.trace.append(TraceEntry(error=str(exc_info[0])))
+        exc_str = str(exc_info[1]) if len(str(exc_info[1])) != 0 else str(exc_info[0])
+        print("caught user exception", exc_str)
+        self.trace.append(TraceEntry(error=exc_str))
         raise bdb.BdbQuit
 
 def get_trace_as_json(code_str, builtins = __builtins__):

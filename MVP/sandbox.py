@@ -1,11 +1,12 @@
 import resource
+import graph
 
 standard_module_import_whitelist = ('math', 'random', 'time', 'datetime',
                                     'functools', 'itertools', 'operator', 
                                     'string', 'collections', 're', 'json',
                                     'heapq', 'bisect', 'copy', 'hashlib')
 
-custom_module_import_whitelist = ('graph',)
+custom_module_import_whitelist = tuple()
 
 for m in standard_module_import_whitelist+custom_module_import_whitelist:
     __import__(m)
@@ -62,7 +63,8 @@ def safe_globals(builtin_main):
 
     safe_globals = {
         '__name__': '__main__',
-        '__builtins__': safe_builtins
+        '__builtins__': safe_builtins,
+        'Graph': graph.Graph
     }
 
     return safe_globals

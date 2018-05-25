@@ -18,7 +18,7 @@ class Vertex(dict):
            self.__setitem__(name, value)
            self._trace___setattr__(name, value)
         else:
-            raise(Exception("You are not allowed to set property {0} of {1}".format(name, self.__class__)))
+            raise(Exception("You are not supposed to set property {0} of {1}".format(name, self.__class__)))
 
 class Graph:
     def __init__(self, n=0, directed=False, weighted=False):
