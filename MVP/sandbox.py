@@ -36,7 +36,7 @@ MAX_MEMORY = 100000000 # 100 mega bytes
 
 # see https://docs.python.org/3/library/resource.html
 def set_resource_limits():
-    # resource.setrlimit(resource.RLIMIT_NOFILE, (0,0))
+    resource.setrlimit(resource.RLIMIT_NOFILE, (10,10))
     resource.setrlimit(resource.RLIMIT_AS, (MAX_MEMORY, MAX_MEMORY))
     resource.setrlimit(resource.RLIMIT_CPU, (MAX_CPU_TIME, MAX_CPU_TIME))
     # pass

@@ -3,12 +3,17 @@ import json
 from tracer_entry import TraceEntry, TraceEntryJSONEncoder
 import sandbox
 
+MAX_LINES = 300
+MAX_FUNCTION_CALLS = 300
+
 class Tracer(bdb.Bdb):
 
     def __init__(self):
         bdb.Bdb.__init__(self)
         self.trace = []
         self.last_line = -1
+        self.number_of_lines = 0
+        self.numer_of_function_calls = 0
 
     # main function
     # it executes the code and returns the trace
@@ -22,6 +27,7 @@ class Tracer(bdb.Bdb):
         except Exception as e:
             print("caught run exception ", e)
             self.trace.append(TraceEntry(error=str(e)))
+            # raise bdb.BdbQuit
 
 
     def user_return(self, frame, return_value):
@@ -31,11 +37,19 @@ class Tracer(bdb.Bdb):
             self.trace.append(return_value)
 
     def user_line(self, frame):
+        self.number_of_lines += 1
+        if self.number_of_lines > MAX_LINES:
+            self.trace.append(TraceEntry(error="Number of lines exectuted exceeded limit of {}".format(MAX_LINES)))
+            raise bdb.BdbQuit
+
         if frame.f_code.co_filename == '<string>':
             self.last_line = frame.f_lineno
 
     def user_call(self, frame, argument_list):
-        pass
+        self.numer_of_function_calls += 1
+        if self.numer_of_function_calls > MAX_FUNCTION_CALLS:
+            self.trace.append(TraceEntry(error="Number of function calls exceeded limit of {}".format(MAX_FUNCTION_CALLS)))
+            raise bdb.BdbQuit
 
     def user_exception(self, frame, exc_info):
         print("caught user exception", str(exc_info[0]))
