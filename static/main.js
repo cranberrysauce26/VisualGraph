@@ -153,6 +153,7 @@ function Visualize() {
             document.getElementById("output").innerHTML = "Traces:<br>";
             var str = this.responseText;
             var traces = JSON.parse(str);
+            console.log(traces);
             // alert(traces.length);
             traces.forEach(function(trace){
                 document.getElementById("output").innerHTML += JSON.stringify(trace) + "<br>";

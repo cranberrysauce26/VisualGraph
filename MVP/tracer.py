@@ -15,11 +15,12 @@ class Tracer(bdb.Bdb):
     def execute(self, code_str, builtins=__builtins__):
         self.trace = []
         # This causes errors for me!?!
-        # sandbox.set_resource_limits()
+        sandbox.set_resource_limits()
         safe_globals = sandbox.safe_globals(builtins)
         try:
             self.run(code_str, safe_globals, safe_globals)
         except Exception as e:
+            print("caught run exception ", e)
             self.trace.append(TraceEntry(error=str(e)))
 
 
@@ -37,13 +38,14 @@ class Tracer(bdb.Bdb):
         pass
 
     def user_exception(self, frame, exc_info):
-        self.trace.append(TraceEntry(error=str(exc_info[1])))
+        print("caught user exception", str(exc_info[0]))
+        self.trace.append(TraceEntry(error=str(exc_info[0])))
         raise bdb.BdbQuit
 
 def get_trace_as_json(code_str, builtins = __builtins__):
     tracer = Tracer()
     tracer.execute(code_str, builtins)
-    print(tracer.trace)
+    print("returning from get_trace_as_json",json.dumps(tracer.trace, cls=TraceEntryJSONEncoder))
     return json.dumps(tracer.trace, cls=TraceEntryJSONEncoder)
 
 if __name__ == '__main__':

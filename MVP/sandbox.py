@@ -19,7 +19,6 @@ def restricted_import(*args):
     # print("restricted_import with:", args, "hi")
     # print("restricted import with args of type", type(args), args[0])
     module_name = args[0]
-    print("module name is {0}".format(module_name))
     if module_name in standard_module_import_whitelist + custom_module_import_whitelist:
         imported_module = __import__(*args)
         return imported_module
@@ -37,7 +36,7 @@ MAX_MEMORY = 100000000 # 100 mega bytes
 
 # see https://docs.python.org/3/library/resource.html
 def set_resource_limits():
-    resource.setrlimit(resource.RLIMIT_NOFILE, (0,0))
+    # resource.setrlimit(resource.RLIMIT_NOFILE, (0,0))
     resource.setrlimit(resource.RLIMIT_AS, (MAX_MEMORY, MAX_MEMORY))
     resource.setrlimit(resource.RLIMIT_CPU, (MAX_CPU_TIME, MAX_CPU_TIME))
     # pass
