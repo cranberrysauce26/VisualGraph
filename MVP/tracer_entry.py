@@ -1,14 +1,14 @@
 import json
 
 class TraceEntry:
-    def __init__(self, error=None, command_name=None, args=[], graph_id=None, return_value=None, line_number=None, graph_type=None):
-        self.error = error
+    def __init__(self, command_name=None, graph_type=None, graph_id=None, args=[], return_value=None, line_number=None, error=None):
         self.command_name = command_name
-        self.args = args
+        self.graph_type = graph_type
         self.graph_id = graph_id
+        self.args = args
         self.return_value = return_value
         self.line_number = line_number
-        self.graph_type = graph_type
+        self.error = error
 
     # for convenience
     def display(self):
@@ -22,15 +22,18 @@ class TraceEntryJSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, TraceEntry):
             return {
-                "error": obj.error,
                 "command_name": obj.command_name,
-                "args": obj.args,
+                "graph_type": obj.graph_type,
                 "graph_id": obj.graph_id,
+                "args": obj.args,
                 "return_value": obj.return_value,
                 "line_number": obj.line_number,
-                "graph_type": obj.graph_type
+                "error": obj.error
             }
         return json.JSONEncoder.default(self, obj)
+
+def add_trace_entry(command_name, graph_type, graph_id, args=[], return_value=None, line_number=None, error=None):
+    return TraceEntry(command_name, graph_type, graph_id, args, return_value, line_number, error)
 
 if __name__ == '__main__':
     trace_entry = TraceEntry()

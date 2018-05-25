@@ -3,8 +3,9 @@ import json
 from tracer_entry import TraceEntry, TraceEntryJSONEncoder
 import sandbox
 
-MAX_LINES = 300
+MAX_USER_LINES = 300
 MAX_FUNCTION_CALLS = 300
+MAX_TOTAL_LINES = 10000
 
 class Tracer(bdb.Bdb):
 
@@ -12,7 +13,8 @@ class Tracer(bdb.Bdb):
         bdb.Bdb.__init__(self)
         self.trace = []
         self.last_line = -1
-        self.number_of_lines = 0
+        self.number_of_user_lines = 0
+        self.number_of_total_lines = 0
         self.numer_of_function_calls = 0
 
     # main function
@@ -37,12 +39,17 @@ class Tracer(bdb.Bdb):
             self.trace.append(return_value)
 
     def user_line(self, frame):
-        self.number_of_lines += 1
-        if self.number_of_lines > MAX_LINES:
-            self.trace.append(TraceEntry(error="Number of lines exectuted exceeded limit of {}".format(MAX_LINES)))
+        self.number_of_total_lines += 1
+        if self.number_of_total_lines > MAX_TOTAL_LINES:
+            self.trace.append(TraceEntry(error="Number of total lines exectuted exceeded limit of {}".format(MAX_TOTAL_LINES)))
             raise bdb.BdbQuit
 
         if frame.f_code.co_filename == '<string>':
+            # this is executed only if run from the user's actual code
+            self.number_of_user_lines += 1
+            if self.number_of_user_lines > MAX_USER_LINES:
+                self.trace.append(TraceEntry(error="Number of user lines exectuted exceeded limit of {}".format(MAX_USER_LINES)))
+                raise bdb.BdbQuit
             self.last_line = frame.f_lineno
 
     def user_call(self, frame, argument_list):
