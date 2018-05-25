@@ -31,7 +31,7 @@ builtin_greylist = {
 }
 
 MAX_CPU_TIME = 3 # 3 seconds
-MAX_MEMORY = 100000000 # 100 mega bytes
+MAX_MEMORY = 250000000 # 250 mega bytes
 
 
 
