@@ -1,19 +1,5 @@
 # VisualGraph
 An interactive graph visualizer.
-<<<<<<< HEAD
-
-# How it works so far:
-
-=======
-# How it works
-The purpose of this project is to let users write code online to interact with a graph interface. For example, users will be able to write in python
-
-    g = Graph(5)
-    g.add_edge(1, 2)
-    g.add_edge(2, 3)
-    g.add_edge(3, 4)
-    for v in g.vertic# VisualGraph
-An interactive graph visualizer.
 # How it works
 The purpose of this project is to let users write code online to interact with a graph interface and visualize it. For example, users will be able to write in python
 
@@ -154,4 +140,3 @@ The important things in this class are 1) you can run a string of python code wi
 # Frontend
 
 TODO
->>>>>>> d5466ef8a011cd4d0f5d58ae0803f75ae7dc2e08
