@@ -1,1 +1,1 @@
-from .sandbox import execute
+from .sandbox import execute, SandboxError

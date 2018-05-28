@@ -1,6 +1,8 @@
 import uuid
 import os
 import shutil
+import json
+from visugraph.sandbox import SandboxError
 
 # TODO: errors
 class BaseRunner:
@@ -49,7 +51,14 @@ class BaseRunner:
     # main function
     def run(self):
         self._setup_env()
-        self._execute()
+        try:
+            self._execute()
+        except SandboxError as e:
+            tr = {'error': e.message}
+            return json.dumps(tr)
+        except Exception as e:
+            tr = {'error': 'An unknown error occured: {}'.format(str(e))}
+            return json.dumps(tr)
         json_str = self._read_result()
         self._cleanup()
         return json_str
