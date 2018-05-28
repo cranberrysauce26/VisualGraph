@@ -109,13 +109,13 @@ int main(int argc, char *argv[]) {
 
     char **program_args = argv+3;
 
-    for (int i = 0; ; ++i) {
-        if (program_args[i]==NULL) {
-            break;
-        } else {
-            printf("args[%d] = %s\n", i, program_args[i]);
-        }
-    }
+    // for (int i = 0; ; ++i) {
+    //     if (program_args[i]==NULL) {
+    //         break;
+    //     } else {
+    //         printf("args[%d] = %s\n", i, program_args[i]);
+    //     }
+    // }
 
     if (load_seccomp() != 0) {
         return 1;

@@ -9,6 +9,8 @@
 
 ### Above combination will ignore all files without extension ###
 
+tmp/
+
 # Visual Studio Code
 .vscode
 # Byte-compiled / optimized / DLL files
