@@ -17,7 +17,7 @@ class BaseRunner:
     '''
 
     # TODO: maybe a symlink would be more efficient?
-    def __init__(self, code_str, tmp_folder, code_fname='code.in', output_fname='trace.json', copy_dir=None):
+    def __init__(self, code_str, tmp_folder, code_fname='code.in', output_fname='trace.json', copy_dir=None, cleanup=True):
         '''
         code_str is the user's code
         tmp_folder is the absolute path to temporary folder root where I should create my sub folder
@@ -42,6 +42,8 @@ class BaseRunner:
 
         with open(self.output_path, 'w'), open(self.input_path, 'w') as code_file:
             code_file.write(self.code)
+        
+        self.should_cleanup = cleanup
 
     # to be overwridden by the base class
     # TODO: Is the callback necessary? I think python is blocking by default.
@@ -68,6 +70,8 @@ class BaseRunner:
         pass
     
     def _cleanup(self):
+        if not self.should_cleanup:
+            return
         # comment out code below to see the actual tmp folder
         if not os.path.exists(self.root_folder):
             return
