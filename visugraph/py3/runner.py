@@ -14,7 +14,8 @@ class Python3Runner(BaseRunner):
         The -B flag is to prevent writing to __pycache__.
         TODO: make sandbox intelligently determine what write calls to kill to eliminate -B
         '''
-        tracer_path = os.path.join(self.root_folder, 'tracer.py')
+        py3_folder = os.path.abspath(os.path.dirname(__file__))
+        tracer_path = os.path.join(py3_folder, 'user/tracer.py')
         sandbox.execute(self.input_path, self.output_path, ['/usr/bin/python3', '-B', tracer_path])
 
 def get_trace(code):
@@ -24,8 +25,8 @@ def get_trace(code):
     '''
     py3_folder = os.path.abspath(os.path.dirname(__file__))
     tmp_folder = os.path.join(py3_folder, 'tmp')
-    user_folder = os.path.join(py3_folder, 'user')
-    runner = Python3Runner(code, tmp_folder, code_fname='main.py', copy_dir=user_folder)
+    # user_folder = os.path.join(py3_folder, 'user')
+    runner = Python3Runner(code, tmp_folder, code_fname='main.py', copy_dir=None, cleanup=False)
     return runner.run()
 
 
