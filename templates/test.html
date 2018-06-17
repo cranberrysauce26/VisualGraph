@@ -7,6 +7,8 @@
 	<!-- Load the vis.js library -->
     <script type="text/javascript" src="/static/lib/vis.min.js"></script>
     <link href="/static/lib/vis.min.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="static/lib/ace-builds/src-noconflict/ace.js" charset="utf-8"></script>
+
 	<style type="text/css">
         #mynetwork {
             width: 600px;
@@ -39,6 +41,11 @@
 </head>
 <body>
 	<canvas id="myCanvas" resize></canvas>
+
+	<div id="editor">function foo(items) {
+    	var x = "All this is syntax highlighted";
+    	return x;
+	}</div>
 	<div id="mynetwork"></div>
 
 	<script type="text/javascript">
