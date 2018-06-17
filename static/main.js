@@ -8,14 +8,14 @@ class Vertex {
     setProperty(name, value){
         this.properties[name] = value;
     }
-
-    printProperties(position) {
-        var text = new paper.PointText(position);
-        text.justification = "center";
-        text.fillColor = 'black';
-        text.fontSize = '20px';
-        text.content = JSON.stringify(this.properties);
-    }
+    //
+    // printProperties(position) {
+    //     var text = new paper.PointText(position);
+    //     text.justification = "center";
+    //     text.fillColor = 'black';
+    //     text.fontSize = '20px';
+    //     text.content = JSON.stringify(this.properties);
+    // }
 }
 
 class Graph {
@@ -78,36 +78,6 @@ class Graph {
 
 	    var network = new vis.Network(container, data, options);
     }
-
-    // display(){
-    //     alert("Display called");
-    //     var pos = {}; // positions of the vertices
-    //     var bigR = 150;
-    //     var smallR = 40;
-    //     var center = new paper.Point(300, 300);
-    //     for (var i = 1; i <= this.n; i++){ // Assumes vertices are labelled with numbers
-    //         var angle = 2*i*Math.PI/this.n;
-    //         var shift = new paper.Point(bigR*Math.cos(angle), bigR*Math.sin(angle));
-    //         pos[i] = center.add(shift);
-    //         var vertex = new paper.Path.Circle(pos[i], smallR);
-    //         vertex.fillColor = 'blue';
-    //         // vertex label
-    //         var text = new paper.PointText(pos[i].add(new paper.Point(0,10)));
-    //         text.justification = 'center';
-    //         text.fillColor = 'white';
-    //         text.fontSize = '30px';
-    //         text.content = i;
-    //         this.vertices[i].printProperties(pos[i].add(new paper.Point(bigR*Math.cos(angle)/2, bigR*Math.sin(angle)/2)));
-    //     }
-    //     for (var i = 1; i <= this.n; i++){
-    //         for (var j in this.adj[i]){
-    //             var edge = new paper.Path.Line(pos[i], pos[j]);
-    //             edge.strokeColor = 'black';
-    //             edge.strokeWidth = 10;
-    //             edge.sendToBack();
-    //         }
-    //     }
-    // }
 }
 
 class GraphManager {
@@ -116,7 +86,6 @@ class GraphManager {
     }
 
     CallFunction(trace){
-        // alert("In CallFunction");
         if (trace["error"]){
             return;
         }
@@ -156,21 +125,15 @@ class GraphManager {
     }
 
     displayAll(){
-        var canvas = document.getElementById("Display");
-        paper.setup(canvas);
-        paper.project.activeLayer.removeChildren();
         for (var id in this.graphs){
             this.graphs[id].displayVis();
         }
-        paper.view.draw();
     }
 }
 
 var graphManager = new GraphManager();
 
 function Visualize() {
-    // alert("Visualize called");
-    // var text = $("#textbox").val();
     var text = editor.getValue();
     var dat = {code : text}
     if (text.length == 0) {
@@ -184,7 +147,6 @@ function Visualize() {
             var str = this.responseText;
             var traces = JSON.parse(str);
             console.log(traces);
-            // alert(traces.length);
             traces.forEach(function(trace){
                 document.getElementById("output").innerHTML += JSON.stringify(trace) + "<br>";
                 graphManager.CallFunction(trace);
