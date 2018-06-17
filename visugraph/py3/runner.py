@@ -26,7 +26,7 @@ def get_trace(code):
     py3_folder = os.path.abspath(os.path.dirname(__file__))
     tmp_folder = os.path.join(py3_folder, 'tmp')
     # user_folder = os.path.join(py3_folder, 'user')
-    runner = Python3Runner(code, tmp_folder, code_fname='main.py', copy_dir=None, cleanup=False)
+    runner = Python3Runner(code, tmp_folder, code_fname='main.py', copy_dir=None, cleanup=True)
     return runner.run()
 
 
