@@ -20,20 +20,28 @@
             }
         </style>
     </head>
+
     <body>
         <h1>Insert Code Here</h1>
         <div id="editor"></div>
-        <button type="button" onclick="visualize()">Click Me!</button>
+        <!-- File uploader -->
+        <form id="file-form" action="handler.php" method="POST">
+    	  <input type="file" id="file-select">
+    	  <button type="submit" id="upload-button">Upload</button>
+    	</form>
+        <button type="button" onclick="visualize()">Visualize!</button>
         <p id="output">Output goes here</p>
-        <!-- <div id="Canvas Holder"></div> -->
     	<div id="mynetwork"></div>
-        <!-- <canvas id="Display" width="1000" height="1000"></canvas> -->
+
+        <!-- Scripts -->
+        <script src="/static/fileUploader.js" type="text/javascript"></script>
+
         <script type="text/javascript" src="/static/lib/paper-full.min.js"></script>
 
         <script src="/static/graph.js" type="text/javascript"></script>
         <script src="/static/graphManager.js" type="text/javascript"></script>
         <script src="/static/main.js" type="text/javascript"></script>
-        
+
 	    <script type="text/javascript" src="static/lib/ace-builds/src-noconflict/ace.js" charset="utf-8"></script>
 
         <script>
@@ -41,5 +49,6 @@
             editor.setTheme("ace/theme/monokai");
             editor.session.setMode("ace/mode/python");
         </script>
+
     </body>
 </html>
