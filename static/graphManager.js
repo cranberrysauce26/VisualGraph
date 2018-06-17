@@ -13,11 +13,11 @@ class GraphManager {
         var retVal = trace["rturn_value"];
         var line = trace["line_number"];
         if (name == "construct"){
-            if (args.length != 3){
+            if (args.length != 4){
                 alert("Error: Wrong number of arguments for graph constructor");
                 return;
             }
-            this.graphs[id] = new Graph(args[0], args[1], args[2]);
+            this.graphs[id] = new Graph(args[0], args[1], args[2], args[3]);
         }
         else if (name == "add_vertex"){
             this.graphs[id].addVertex();

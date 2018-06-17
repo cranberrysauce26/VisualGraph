@@ -23,7 +23,10 @@ class Vertex(dict):
 
 class Graph:
     num_graphs = 0
-    def __init__(self, n=0, directed=False, weighted=False):
+    def __init__(self, n=0, directed=False, weighted=False, name=None):
+        if name == None:
+            name = 'Graph {}'.format(Graph.num_graphs)
+        object.__setattr__(self, 'name', name)
         object.__setattr__(self, '_property_dict', {})
         object.__setattr__(self, 'id', Graph.num_graphs)
         object.__setattr__(self, 'num_vertices', n)
@@ -37,7 +40,7 @@ class Graph:
             command_name='construct',
             graph_type=self.graph_type,
             graph_id=self.id,
-            args=[n, directed, weighted]
+            args=[n, directed, weighted, name]
         )
         Graph.num_graphs += 1
 

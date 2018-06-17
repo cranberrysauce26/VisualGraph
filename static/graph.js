@@ -1,8 +1,9 @@
 class Graph {
-    constructor(n, directed, weighted){
+    constructor(n, directed, weighted, name){
         this.n = n;
         this.directed = directed;
         this.weighted = weighted;
+        this.name = name
         this.vertices = {};
         this.adj = {};
         for (var i = 1; i <= this.n; i++){
