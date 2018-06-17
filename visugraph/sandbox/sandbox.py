@@ -22,3 +22,10 @@ def execute(path_in, path_out, args, safe=True):
         file_out = open(path_out, 'w')
         result = subprocess.run(args, stdout=subprocess.PIPE, stderr=None, input=file_in.read(), encoding='ascii')
         file_out.write(result.stdout)
+
+if __name__ == '__main__':
+    folder = os.path.dirname(__file__)
+    input_path = os.path.join(folder, 'tests/in.txt')
+    output_path = os.path.join(folder, 'tests/out.txt')
+    driver_path = os.path.join(folder, 'tests/python/test1.py')
+    execute(input_path, output_path, ['/usr/bin/python3', '-B', driver_path])
