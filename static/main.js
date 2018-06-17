@@ -1,8 +1,8 @@
 class Vertex {
-    constructor(id, graph) {
+    constructor(id, graph, color) {
         this.id = id;
         this.graph = graph;
-        this.properties = {};
+        this.properties = {color: 'orange'};
     }
 
     setProperty(name, value){
@@ -55,7 +55,11 @@ class Graph {
         var nodeArray = new Array();
         var edgeArray = new Array();
         for (var i = 1; i <= this.n; i++){
-            nodeArray.push({id: this.vertices[i].id, label: this.vertices[i].id.toString()});
+            nodeArray.push({
+                id: this.vertices[i].id,
+                label: this.vertices[i].id.toString(),
+                color: this.vertices[i].properties['color']
+            });
             for (var j in this.adj[i]){
                 if (!this.directed && j < i) // in undirected graphs, make sure each edge is just displayed once
                     continue;
