@@ -134,6 +134,7 @@ class GraphManager {
 var graphManager = new GraphManager();
 
 function Visualize() {
+    testfunc();
     var text = editor.getValue();
     var dat = {code : text}
     if (text.length == 0) {
