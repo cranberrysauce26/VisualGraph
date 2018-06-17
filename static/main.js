@@ -170,7 +170,8 @@ var graphManager = new GraphManager();
 
 function Visualize() {
     // alert("Visualize called");
-    var text = $("#textbox").val();
+    // var text = $("#textbox").val();
+    var text = editor.getValue();
     var dat = {code : text}
     if (text.length == 0) {
         document.getElementById("output").innerHTML = "You didn't enter anything!";
