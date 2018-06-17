@@ -9,76 +9,72 @@
     <link href="/static/lib/vis.min.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="static/lib/ace-builds/src-noconflict/ace.js" charset="utf-8"></script>
 
-	<style type="text/css">
-        #mynetwork {
-            width: 600px;
-            height: 400px;
-            border: 1px solid lightgray;
-        }
-    </style>
 
-	<!-- Define inlined PaperScript associate it with myCanvas -->
-	<!-- <script type="text/paperscript" canvas="myCanvas">
-		var path = new Path();
-		path.strokeColor = 'black';
-		path.add(new Point(30, 75));
-		path.add(new Point(30, 25));
-		path.add(new Point(80, 25));
-		path.add(new Point(80, 75));
-		path.closed = true;
-
-		// Select the path, so we can see its handles:
-		path.fullySelected = true;
-
-		// Create a copy of the path and move it 100pt to the right:
-		var copy = path.clone();
-		copy.fullySelected = true;
-		copy.position.x += 100;
-
-		// Smooth the segments of the copy:
-		copy.smooth();
-	</script> -->
 </head>
 <body>
-	<canvas id="myCanvas" resize></canvas>
+	<form id="file-form" action="handler.php" method="POST">
+	  <input type="file" id="file-select" name="photos[]" multiple/>
+	  <button type="submit" id="upload-button">Upload</button>
+	</form>
+	<pre id="stuff">Stuff</pre>
+	<script>
+		// Check for the various File API support.
+		if (window.File && window.FileReader && window.FileList && window.Blob) {
+			// Great success! All the File APIs are supported.
+		}
+		else {
+			alert('The File APIs are not fully supported in this browser.');
+		}
+		var form = document.getElementById('file-form');
+		var fileSelect = document.getElementById('file-select');
+		var uploadButton = document.getElementById('upload-button');
 
-	<div id="editor">function foo(items) {
-    	var x = "All this is syntax highlighted";
-    	return x;
-	}</div>
-	<div id="mynetwork"></div>
+		form.onsubmit = function(event) {
+			event.preventDefault();
 
-	<script type="text/javascript">
-	    // create an array with nodes
-	    var nodes = new vis.DataSet([
-	        {id: 1, label: 'Node 1'},
-	        {id: 2, label: 'Node 2'},
-	        {id: 3, label: 'Node 3'},
-	        {id: 4, label: 'Node 4'},
-	        {id: 5, label: 'Node 5'}
-	    ]);
+			// Update button text.
+			uploadButton.innerHTML = 'Uploading...';
 
-	    // create an array with edges
-	    var edges = new vis.DataSet([
-	        {from: 1, to: 3},
-	        {from: 1, to: 2},
-	        {from: 2, to: 4},
-	        {from: 2, to: 5}
-	    ]);
+			var file = fileSelect.files[0];
 
-	    // create a network
-	    var container = document.getElementById('mynetwork');
-
-	    // provide the data in the vis format
-	    var data = {
-	        nodes: nodes,
-	        edges: edges
-	    };
-	    var options = {};
-
-	    // initialize your network!
-	    var network = new vis.Network(container, data, options);
+			// Check the file type.
+			// if (!file.type.match('image.*')) {
+			// 	continue;
+			// }
+			console.log(file.type);
+			var reader = new FileReader();
+			// reader.onload = function(e) {}
+			reader.readAsText(file);
+			// console.log(reader.error);
+			// console.log(reader.result);
+			// document.getElementById("stuff").innerHTML = reader.result;
+			// alert("Done");
+			reader.onload = function(e) {
+				document.getElementById("stuff").innerHTML = reader.result;
+				console.log(reader.result);
+			};
+		}
 	</script>
+	<!-- <input type="file" id="files" name="files[]" multiple />
+	<output id="list"></output>
+
+	<script>
+	  function handleFileSelect(evt) {
+	    var files = evt.target.files; // FileList object
+
+	    // files is a FileList of File objects. List some properties.
+	    var output = [];
+	    for (var i = 0, f; f = files[i]; i++) {
+	      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+	                  f.size, ' bytes, last modified: ',
+	                  f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+	                  '</li>');
+	    }
+	    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+	  }
+
+	  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+	</script> -->
 
 </body>
 </html>
