@@ -2,31 +2,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- Load the Paper.js library -->
-<script type="text/javascript" src="/static/lib/paper-full.min.js"></script>
-<!-- Define inlined PaperScript associate it with myCanvas -->
-<script type="text/paperscript" canvas="myCanvas">
-	var path = new Path();
-	path.strokeColor = 'black';
-	path.add(new Point(30, 75)); 
-	path.add(new Point(30, 25)); 
-	path.add(new Point(80, 25));
-	path.add(new Point(80, 75));
-	path.closed = true;
+	<!-- Load the Paper.js library -->
+	<script type="text/javascript" src="/static/lib/paper-full.min.js"></script>
+	<!-- Load the vis.js library -->
+    <script type="text/javascript" src="/static/lib/vis.min.js"></script>
+    <link href="/static/lib/vis.min.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+        #mynetwork {
+            width: 600px;
+            height: 400px;
+            border: 1px solid lightgray;
+        }
+    </style>
 
-	// Select the path, so we can see its handles:
-	path.fullySelected = true;
+	<!-- Define inlined PaperScript associate it with myCanvas -->
+	<!-- <script type="text/paperscript" canvas="myCanvas">
+		var path = new Path();
+		path.strokeColor = 'black';
+		path.add(new Point(30, 75));
+		path.add(new Point(30, 25));
+		path.add(new Point(80, 25));
+		path.add(new Point(80, 75));
+		path.closed = true;
 
-	// Create a copy of the path and move it 100pt to the right:
-	var copy = path.clone();
-	copy.fullySelected = true;
-	copy.position.x += 100;
+		// Select the path, so we can see its handles:
+		path.fullySelected = true;
 
-	// Smooth the segments of the copy:
-	copy.smooth();
-</script>
+		// Create a copy of the path and move it 100pt to the right:
+		var copy = path.clone();
+		copy.fullySelected = true;
+		copy.position.x += 100;
+
+		// Smooth the segments of the copy:
+		copy.smooth();
+	</script> -->
 </head>
 <body>
 	<canvas id="myCanvas" resize></canvas>
+	<div id="mynetwork"></div>
+
+	<script type="text/javascript">
+	    // create an array with nodes
+	    var nodes = new vis.DataSet([
+	        {id: 1, label: 'Node 1'},
+	        {id: 2, label: 'Node 2'},
+	        {id: 3, label: 'Node 3'},
+	        {id: 4, label: 'Node 4'},
+	        {id: 5, label: 'Node 5'}
+	    ]);
+
+	    // create an array with edges
+	    var edges = new vis.DataSet([
+	        {from: 1, to: 3},
+	        {from: 1, to: 2},
+	        {from: 2, to: 4},
+	        {from: 2, to: 5}
+	    ]);
+
+	    // create a network
+	    var container = document.getElementById('mynetwork');
+
+	    // provide the data in the vis format
+	    var data = {
+	        nodes: nodes,
+	        edges: edges
+	    };
+	    var options = {};
+
+	    // initialize your network!
+	    var network = new vis.Network(container, data, options);
+	</script>
+
 </body>
 </html>
