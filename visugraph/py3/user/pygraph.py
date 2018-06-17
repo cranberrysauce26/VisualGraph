@@ -22,9 +22,10 @@ class Vertex(dict):
             raise(Exception('You are not supposed to set property {0} of {1}'.format(name, self.__class__)))
 
 class Graph:
+    num_graphs = 0
     def __init__(self, n=0, directed=False, weighted=False):
         object.__setattr__(self, '_property_dict', {})
-        object.__setattr__(self, 'id', random.randint(0, 1000000000000000000))
+        object.__setattr__(self, 'id', Graph.num_graphs)
         object.__setattr__(self, 'num_vertices', n)
         object.__setattr__(self, 'directed', directed)
         object.__setattr__(self, 'weighted', weighted)
@@ -38,6 +39,7 @@ class Graph:
             graph_id=self.id,
             args=[n, directed, weighted]
         )
+        Graph.num_graphs += 1
 
     def add_vertex(self, id=None):
         object.__setattr__(self, 'num_vertices', self.num_vertices+1)
