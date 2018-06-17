@@ -3,7 +3,7 @@ class GraphManager {
         this.graphs = {};
     }
 
-    CallFunction(trace){
+    callFunction(trace){
         if (trace["error"]){
             return;
         }
@@ -20,14 +20,14 @@ class GraphManager {
             this.graphs[id] = new Graph(args[0], args[1], args[2]);
         }
         else if (name == "add_vertex"){
-            this.graphs[id].add_vertex();
+            this.graphs[id].addVertex();
         }
         else if (name == "add_edge") {
             if (args.length != 3){
                 alert("Error: Wrong number of arguments for add_edge");
                 return;
             }
-            this.graphs[id].add_edge(args[0], args[1], args[2]);
+            this.graphs[id].addEdge(args[0], args[1], args[2]);
         }
         else if (name == "set_vertex_property") {
             if (args.length != 3){

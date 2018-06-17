@@ -12,13 +12,13 @@ class Graph {
     }
 
     // TODO: add_vertex with id
-    add_vertex(){
+    addVertex(){
         this.n++;
         this.adj[this.n] = {};
         this.vertices[this.n] = new Vertex(this.n, this);
     }
 
-    add_edge(u, v, w) {
+    addEdge(u, v, w) {
         if (u > 0 && u <= this.n && v > 0 && v <= this.n){
             this.adj[u][v] = w;
             if (!this.directed){

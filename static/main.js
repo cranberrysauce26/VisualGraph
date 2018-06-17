@@ -1,6 +1,6 @@
 var graphManager = new GraphManager();
 
-function Visualize() {
+function visualize() {
     var text = editor.getValue();
     var dat = {code : text}
     if (text.length == 0) {
@@ -16,7 +16,7 @@ function Visualize() {
             console.log(traces);
             traces.forEach(function(trace){
                 document.getElementById("output").innerHTML += JSON.stringify(trace) + "<br>";
-                graphManager.CallFunction(trace);
+                graphManager.callFunction(trace);
             });
             document.getElementById("output").innerHTML += "Finished printing traces";
             graphManager.displayAll();
