@@ -12,15 +12,16 @@ function visualize() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("output").innerHTML = "Traces:<br>";
+            // document.getElementById("output").innerHTML = "Traces:<br>";
             var str = this.responseText;
             var traces = JSON.parse(str);
+            console.log("Traces:");
             console.log(traces);
             traces.forEach(function (trace) {
-                document.getElementById("output").innerHTML += JSON.stringify(trace) + "<br>";
+                // document.getElementById("output").innerHTML += JSON.stringify(trace) + "<br>";
                 graphManager.callFunction(trace);
             });
-            document.getElementById("output").innerHTML += "Finished printing traces";
+            // document.getElementById("output").innerHTML += "Finished printing traces";
             line = 0;
             document.getElementById("lineDisplay").innerHTML = "";
             graphManager.displayAll(line);

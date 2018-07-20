@@ -58,10 +58,16 @@ class GraphManager {
     }
 
     displayAll(line) {
+        document.getElementById('graphDisplay').innerHTML = ""; // clear current graphs displayed
         for (var id in this.graphs) { // will order of IDs change?
+            if (this.edits[id][0] <= line) {
+                document.getElementById('graphDisplay').innerHTML += "<div style='height:400px; width:600px; background-color:white; border:2px solid black; margin:10px' id='" + id + "'></div>";
+            }
+        }
+        for (var id in this.graphs) {
             for (var i = this.edits[id].length - 1; i >= 0; i--) {
                 if (this.edits[id][i] <= line) { // Do we want it to be <=, or < ?
-                    this.graphs[id][i].displayVis();
+                    this.graphs[id][i].displayVis(id);
                     break;
                 }
             }

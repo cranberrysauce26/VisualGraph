@@ -48,7 +48,7 @@ class Graph {
         }
     }
 
-    displayVis() {
+    displayVis(id) {
         var nodeArray = new Array();
         var edgeArray = new Array();
         for (var i = 1; i <= this.n; i++) {
@@ -66,7 +66,7 @@ class Graph {
         var nodes = new vis.DataSet(nodeArray);
         var edges = new vis.DataSet(edgeArray);
 
-        var container = document.getElementById('mynetwork');
+        var container = document.getElementById(id); // must make sure that graph id does not match any other element id
         var data = {
             nodes: nodes,
             edges: edges
