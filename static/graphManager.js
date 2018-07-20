@@ -26,7 +26,7 @@ class GraphManager {
             this.edits[id].push(line);
         }
         else if (name == "add_vertex") {
-            var copy = new Graph(this.graphs[id][this.graphs[id].length - 1]); // current version of the graph
+            var copy = this.graphs[id][this.graphs[id].length - 1].copy(); // current version of the graph
             copy.addVertex();
             this.graphs[id].push(copy);
             this.edits[id].push(line);
@@ -36,7 +36,7 @@ class GraphManager {
                 alert("Error: Wrong number of arguments for add_edge");
                 return;
             }
-            var copy = new Graph(this.graphs[id][this.graphs[id].length - 1]); // current version of the graph
+            var copy = this.graphs[id][this.graphs[id].length - 1].copy(); // current version of the graph
             copy.addEdge(args[0], args[1], args[2]);
             this.graphs[id].push(copy);
             this.edits[id].push(line);
@@ -46,7 +46,7 @@ class GraphManager {
                 alert("Error: Wrong number of arguments for setting vertex prooperty");
                 return;
             }
-            var copy = new Graph(this.graphs[id][this.graphs[id].length - 1]); // current version of the graph
+            var copy = this.graphs[id][this.graphs[id].length - 1].copy(); // current version of the graph
             copy.vertices[args[0]].setProperty(args[1], args[2]);
             this.graphs[id].push(copy);
             this.edits[id].push(line);
@@ -58,7 +58,7 @@ class GraphManager {
     }
 
     displayAll(line) {
-        for (var id in this.graphs) {
+        for (var id in this.graphs) { // will order of IDs change?
             for (var i = this.edits[id].length - 1; i >= 0; i--) {
                 if (this.edits[id][i] <= line) { // Do we want it to be <=, or < ?
                     this.graphs[id][i].displayVis();

@@ -1,4 +1,5 @@
 var graphManager = new GraphManager();
+var line = 0;
 
 function visualize() {
     console.log("Visualize called");
@@ -20,10 +21,26 @@ function visualize() {
                 graphManager.callFunction(trace);
             });
             document.getElementById("output").innerHTML += "Finished printing traces";
-            graphManager.displayAll();
+            line = 0;
+            document.getElementById("lineDisplay").innerHTML = "";
+            graphManager.displayAll(line);
         }
     };
     xhttp.open("POST", "/trace", true);
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.send(JSON.stringify(dat));
+}
+
+function prevLine() {
+    if (line > 0) {
+        line--;
+    }
+    graphManager.displayAll(line);
+    document.getElementById("lineDisplay").innerHTML = "Line: " + line;
+}
+
+function nextLine() {
+    line++; // needs max line number
+    graphManager.displayAll(line);
+    document.getElementById("lineDisplay").innerHTML = "Line: " + line;
 }

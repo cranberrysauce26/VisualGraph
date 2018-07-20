@@ -1,15 +1,17 @@
 class Vertex {
-    constructor(id, graph, color) {
+    constructor(id, graph) {
         this.id = id;
         this.graph = graph; // is this necessary?
-        this.properties = { color: 'orange' };
+        this.properties = { color: 'orange' }; // default vertex color
     }
 
     // copy constructor
-    constructor(v) {
-        this.id = v.id;
-        this.graph = v.graph;
-        this.color = v.color;
+    copy() {
+        var v = new Vertex(this.id, this.graph);
+        for (var property in this.properties){
+            v.properties[property] = this.properties[property];
+        }
+        return v;
     }
 
     setProperty(name, value) {

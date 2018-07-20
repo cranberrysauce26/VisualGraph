@@ -12,21 +12,20 @@ class Graph {
         }
     }
 
-    // copy constructor
-    constructor(g) {
-        this.n = g.n;
-        this.directed = g.directed;
-        this.weighted = g.weighted;
-        this.name = g.name;
-        this.vertices = {};
-        this.adj = {};
-        for (var id in g.vertices) {
-            this.vertices[id] = new Vertex(g.vertices[id]);
-            this.vertices[id].graph = this;
-            for (var neighbor in g.adj[id]) {
-                this.adj[id][neighbor] = g.adj[id][neighbor]; // replace with edge copy constructor
+    // copies the graph
+    copy() {
+        var g = new Graph(this.n, this.directed, this.weighted, this.name);
+        g.vertices = {};
+        g.adj = {};
+        for (var id in this.vertices) {
+            g.vertices[id] = this.vertices[id].copy();
+            g.vertices[id].graph = g;
+            g.adj[id] = {};
+            for (var neighbor in this.adj[id]) {
+                g.adj[id][neighbor] = this.adj[id][neighbor]; // replace with edge copy
             }
         }
+        return g;
     }
 
     // TODO: add_vertex with id
