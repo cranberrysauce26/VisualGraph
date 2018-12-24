@@ -1,6 +1,6 @@
 import bdb
 import json
-import sys # for getting main arguments
+import sys  # for getting main arguments
 import pybox
 from trace_entry import TraceEntry, TraceEntryJSONEncoder
 
@@ -29,7 +29,6 @@ class Tracer(bdb.Bdb):
             self.run(code_str, safe_globals, safe_globals)
             # self.run(code_str)
         except Exception as e:
-            print('caught run exception ', e)
             self.trace.append(TraceEntry(error=str(e)))
 
     def user_return(self, frame, return_value):
@@ -40,26 +39,29 @@ class Tracer(bdb.Bdb):
     def user_line(self, frame):
         self.number_of_total_lines += 1
         if self.number_of_total_lines > MAX_TOTAL_LINES:
-            self.trace.append(TraceEntry(error='Number of total lines exectuted exceeded limit of {}'.format(MAX_TOTAL_LINES)))
+            self.trace.append(TraceEntry(
+                error='Number of total lines exectuted exceeded limit of {}'.format(MAX_TOTAL_LINES)))
             raise bdb.BdbQuit
 
         if frame.f_code.co_filename == '<string>':
             # this is executed only if run from the user's actual code
             self.number_of_user_lines += 1
             if self.number_of_user_lines > MAX_USER_LINES:
-                self.trace.append(TraceEntry(error='Number of user lines exectuted exceeded limit of {}'.format(MAX_USER_LINES)))
+                self.trace.append(TraceEntry(
+                    error='Number of user lines exectuted exceeded limit of {}'.format(MAX_USER_LINES)))
                 raise bdb.BdbQuit
             self.last_line = frame.f_lineno
 
     def user_call(self, frame, argument_list):
         self.numer_of_function_calls += 1
         if self.numer_of_function_calls > MAX_FUNCTION_CALLS:
-            self.trace.append(TraceEntry(error='Number of function calls exceeded limit of {}'.format(MAX_FUNCTION_CALLS)))
+            self.trace.append(TraceEntry(
+                error='Number of function calls exceeded limit of {}'.format(MAX_FUNCTION_CALLS)))
             raise bdb.BdbQuit
 
     def user_exception(self, frame, exc_info):
-        exc_str = str(exc_info[1]) if len(str(exc_info[1])) != 0 else str(exc_info[0])
-        print('caught user exception', exc_str)
+        exc_str = str(exc_info[1]) if len(
+            str(exc_info[1])) != 0 else str(exc_info[0])
         self.trace.append(TraceEntry(error=exc_str))
         raise bdb.BdbQuit
 
@@ -69,6 +71,7 @@ def main():
     tracer = Tracer()
     tracer.execute(codestr, __builtins__)
     print(json.dumps(tracer.trace, cls=TraceEntryJSONEncoder))
+
 
 if __name__ == '__main__':
     main()
