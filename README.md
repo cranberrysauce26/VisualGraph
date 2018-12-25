@@ -22,6 +22,8 @@ The purpose of this project is to let users write code online to interact with a
      
 Then on the website, they will see a simple dfs function where each vertex has a property above it called `visit` that begins as `False` and is set to `True` when it is reached by the dfs. This is useful for debugging and also learning basic graph theory.
 
+**The front end is not fully implemented yet. Currently it only supports adding vertices and edges, and creating multiple graphs.**
+
 # How it works
  - Frontend submits json object to /trace containing the properties `code` which is the user's code as a string, and `lang` which is the user's coding language.
  - Backend returns the trace, which is the sequence of commands the user's code tells to our graph interface. For example, if the user creates a graph with 5 vertices and adds an edge between vertices 1 and 2, the trace would conceptually be `["Create a graph with 5 vertices", "Add an edge between vertices 1 and 2"]`
