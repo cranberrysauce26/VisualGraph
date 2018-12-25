@@ -32,6 +32,8 @@ Then on the website, they will see a simple dfs function where each vertex has a
     g = Graph(5)
     g.add_edge(1, 2)
     g.vertex(2).happy = True
+    print("Hello World")
+    g.favourite_school = "MIT"
 
    The above code generates the following trace.
 
@@ -55,15 +57,33 @@ Then on the website, they will see a simple dfs function where each vertex has a
 		    "line_number": 2, 
 		    "error": null
 		 },
-	 {
-		  "command_name": "set_vertex_property",
-		  "graph_type": "graph",
-		  "graph_id": 0,
-		  "args": [2, "happy", true],
-		  "return_value": null,
-		  "line_number": 3,
-		  "error": null
-	}
+		 {
+			  "command_name": "set_vertex_property",
+			  "graph_type": "graph",
+			  "graph_id": 0,
+			  "args": [2, "happy", true],
+			  "return_value": null,
+			  "line_number": 3,
+			  "error": null
+		},
+		{
+			"command_name": "user_stdout",
+			"graph_type": null, 
+			"graph_id": null, 
+			"args": [], 
+			"return_value": "Hello World\n",
+			"line_number": 4, 
+			"error": null
+		}, 
+		{
+			"command_name": "add_graph_property",
+			"graph_type": "graph", 
+			"graph_id": 0, 
+			"args": ["favourite_school", "MIT"],
+			"return_value": null, 
+			"line_number": 5, 
+			"error": null
+		}
 	]
 # How is the trace generated?
  - The user's code is copied to a temporary folder `project_root/tmp/{random_uuid}`. This is handled by `BaseRunner`.
