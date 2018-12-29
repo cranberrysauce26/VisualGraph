@@ -98,7 +98,7 @@ Then on the website, they will see a simple dfs function where each vertex has a
  - `pybox.py` also makes the `Graph` class a global variable for the code that `Tracer` is running to access.
  - Finally, `pybox.py` makes sure that any attempt to access illegal functions is recorded as a `TraceEntry` object saying that this module or function is illegal.
  - The second level of sandboxing is Linux's seccomp. This is only available for Linux machines, and the seccomp library must be downloaded first.
- - See `seccomp.c` for details. All it does is disable dangerous syscalls.
+ - See `seccomp.c` for details. All it does is disable dangerous syscalls and provide memory/time limits.
 
 **Multiple language support**
 
